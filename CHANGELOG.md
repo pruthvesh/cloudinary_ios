@@ -1,4 +1,22 @@
 
+4.0.1 / 2023-06-12
+==================
+
+Other changes
+-------------
+  * Fix analytics token prefix
+
+4.0.0 / 2023-05-22
+==================
+
+New functionality
+-----------------
+  * Turn on `CLDURLCache` on by default
+  
+Other changes
+-------------
+  * Make upload request respect timeout
+
 3.4.0 / 2023-03-12
 ==================
 
