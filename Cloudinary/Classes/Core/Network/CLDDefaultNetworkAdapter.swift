@@ -30,13 +30,17 @@ internal class CLDDefaultNetworkAdapter: NSObject, CLDNetworkAdapter {
         if let configuration = configuration {
             manager = CLDNSessionManager(configuration: configuration)
         } else {
+            
+            
             let configuration: URLSessionConfiguration = {
+                // Pruthvesh Change ======================
                 let configuration = URLSessionConfiguration.default
                 configuration.httpAdditionalHeaders = CLDNSessionManager.defaultHTTPHeaders
                 configuration.timeoutIntervalForRequest = 10 * 60
                 configuration.timeoutIntervalForResource = 10 * 60
                 configuration.httpMaximumConnectionsPerHost = 2
                 return configuration
+                // Pruthvesh Change ======================
             }()
             manager = CLDNSessionManager(configuration: configuration)
         }
