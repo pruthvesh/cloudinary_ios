@@ -1,12 +1,68 @@
-4.2.0 / 2023-10-12
+5.0.0 / 2024-04-14
 ==================
+
+Breaking Changes
+----------------
+* Remove CLDURLCache in favor of native URLCache
+* Remove ImageCache
+* Old cache saved to the disk will be purged
+
+New functionality
+-----------------
+* Add URLCache support for `CLDUIImageVIew`
+
+
+4.7.0 / 2024-03-25
+==================
+
+Other Changes
+-------------
+  * Fix privacy manifest
+  * Fix `CLDVideoPlayer`
+
+
+4.6.0 / 2024-03-12
+==================
+
+New functionality
+-----------------
+* Add support for `media_metadata`
+
+Other Changes
+-------------
+* Fix video analytics
+
+4.5.0 / 2024-02-18
+==================
+
+Other Changes
+-------------
+  * Add privacy manifest
+
+4.4.0 / 2024-01-15
+==================
+
 Other Changes
 -------------
   * Update analytics token
 
+4.3.0 / 2023-12-25
+==================
+
+Other Changes
+-------------
+  * Add video player analytics
+
+4.2.0 / 2023-10-12
+==================
+
+Other Changes
+-------------
+  * Update analytics token
 
 4.1.1 / 2023-09-18
 ==================
+
 Other Changes
 -------------
   * Fix analytics import

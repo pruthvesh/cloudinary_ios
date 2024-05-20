@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'Cloudinary'
-    s.version          = '4.2.0'
+    s.version          = '5.0.0'
     s.summary          = "Cloudinary is a cloud service that offers a solution to a web application's entire image management pipeline."
     
     s.description      = <<-DESC
@@ -33,7 +33,8 @@ Pod::Spec.new do |s|
     s.subspec 'ios' do |spec|
         
         spec.platform              = :ios
-        spec.source_files          = 'Cloudinary/Classes/**/*'
-    
+        spec.source_files          = 'Cloudinary/Classes/**/*.{swift,h}'
+        spec.resource_bundles      = { 'Cloudinary' => ['Cloudinary/Classes/Core/Network/PrivacyInfo.xcprivacy'] }
+
     end
 end
