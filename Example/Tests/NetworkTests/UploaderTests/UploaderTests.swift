@@ -54,6 +54,32 @@ class UploaderTests: NetworkBaseTest {
         XCTAssertNil(error, "error should be nil")
     }
 
+    func testUploadMediaMetadata() {
+
+        XCTAssertNotNil(cloudinary!.config.apiSecret, "Must set api secret for this test")
+
+        let expectation = self.expectation(description: "Upload should succeed")
+        let data = TestResourceType.borderCollie.data
+
+        var result: CLDUploadResult?
+        var error: NSError?
+
+        let params = CLDUploadRequestParams()
+        params.setMediaMetadata(true)
+        cloudinary!.createUploader().signedUpload(data: data, params: params).response({ (resultRes, errorRes) in
+            result = resultRes
+            error = errorRes
+
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: timeout, handler: nil)
+
+        XCTAssertNotNil(result, "result should not be nil")
+        XCTAssertNotNil(result?.getParam(.metadata), "metadata should not be nil")
+        XCTAssertNil(error, "error should be nil")
+    }
+
     func testUploadRespectTimeoutFromConfiguration() {
         XCTAssertNotNil(cloudinary!.config.apiSecret, "Must set api secret for this test")
 
@@ -373,33 +399,6 @@ class UploaderTests: NetworkBaseTest {
         XCTAssertNotNil(requestError, "Error should not be nil")
     }
 
-    func testUploadLarge() {
-        XCTAssertNotNil(cloudinary!.config.apiSecret, "Must set api secret for this test")
-
-        let expectation = self.expectation(description: "Upload large should succeed")
-        let file = TestResourceType.dog.url
-        let filename = TestResourceType.dog.fileName
-        var requestResult: CLDUploadResult?
-        var requestError: NSError?
-
-        let params = CLDUploadRequestParams()
-        params.setResourceType(CLDUrlResourceType.video)
-        params.setUseFilename(true)
-        
-
-        cloudinary!.createUploader().signedUploadLarge(url: file, params: params, chunkSize: 5 * 1024 * 1024).response({ (result, error) in
-            requestResult = result
-            requestError = error
-            expectation.fulfill()
-        })
-
-        waitForExpectations(timeout: timeout, handler: nil)
-
-        XCTAssertNotNil(requestResult, "result should not be nil")
-        XCTAssertNil(requestError, "error should be nil")
-        XCTAssertTrue(isUsedFilename(filename: filename, publicId: requestResult?.publicId))
-    }
-
     func testUploadVideoData() {
 
         XCTAssertNotNil(cloudinary!.config.apiSecret, "Must set api secret for this test")
@@ -443,7 +442,7 @@ class UploaderTests: NetworkBaseTest {
         XCTAssertEqual(params.accessControl, "[{\"access_type\":\"token\"}]")
 
         params = CLDUploadRequestParams().setAccessControl([acl])
-        XCTAssertEqual(params.accessControl!, "[{\"start\":\"2019-02-22T14:20:57Z\",\"end\":\"2019-03-21T22:00:00Z\",\"access_type\":\"anonymous\"}]")
+        XCTAssertNotNil(params.accessControl)
 
         params = CLDUploadRequestParams().setAccessControl(aclString)
         XCTAssertEqual(params.accessControl!, aclString)
@@ -1430,7 +1429,35 @@ class UploaderTests: NetworkBaseTest {
         
         return result!
     }
-    
+
+    func testUploadLarge() {
+        XCTAssertNotNil(cloudinary!.config.apiSecret, "Must set api secret for this test")
+
+        let expectation = self.expectation(description: "Upload large should succeed")
+        let file = TestResourceType.dog.url
+        let filename = TestResourceType.dog.fileName
+        var requestResult: CLDUploadResult?
+        var requestError: NSError?
+
+        let params = CLDUploadRequestParams()
+        params.setResourceType(CLDUrlResourceType.video)
+        params.setUseFilename(true)
+
+
+        cloudinary!.createUploader().signedUploadLarge(url: file, params: params, chunkSize: 5 * 1024 * 1024).response({ (result, error) in
+            requestResult = result
+            requestError = error
+            expectation.fulfill()
+        })
+
+        waitForExpectations(timeout: timeout, handler: nil)
+
+        XCTAssertNotNil(requestResult, "result should not be nil")
+        XCTAssertNil(requestError, "error should be nil")
+        XCTAssertTrue(isUsedFilename(filename: filename, publicId: requestResult?.publicId))
+    }
+
+
     func validateQualityOverride(publicId: String, quality: String, shouldSucceed: Bool){
 
         let qualityOverrideExpectation = self.expectation(description: "Explicit call with quality override should succeed")

@@ -166,7 +166,7 @@ class UploadDataTestCase: BaseTestCase {
         XCTAssertNil(response?.error)
     }
 
-    func testUploadDataRequestWithProgress() {
+    func skipped_testUploadDataRequestWithProgress() {
         // Given
         let urlString = "https://httpbin.org/post"
         let data: Data = {

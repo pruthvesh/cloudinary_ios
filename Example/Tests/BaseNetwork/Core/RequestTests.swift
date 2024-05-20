@@ -28,7 +28,7 @@ import XCTest
 class RequestInitializationTestCase: BaseTestCase {
     func testRequestClassMethodWithMethodAndURL() {
         // Given
-        let urlString = "https://httpbin.org/"
+        let urlString = "http://httpbin.org/"
 
         // When
         let request = CLDNSessionManager.default.request(urlString)
@@ -42,7 +42,7 @@ class RequestInitializationTestCase: BaseTestCase {
 
     func testRequestClassMethodWithMethodAndURLAndParameters() {
         // Given
-        let urlString = "https://httpbin.org/get"
+        let urlString = "http://httpbin.org/get"
 
         // When
         let request = CLDNSessionManager.default.request(urlString, parameters: ["foo": "bar"])
@@ -300,7 +300,6 @@ class RequestResponseTestCase: BaseTestCase {
         XCTAssertNotNil(response?.request)
         XCTAssertNotNil(response?.response)
         XCTAssertNotNil(response?.data)
-
         if let json = response?.result.value as? [String: Any], let form = json["form"] as? [String: String] {
             XCTAssertEqual(form["french"], parameters["french"])
             XCTAssertEqual(form["japanese"], parameters["japanese"])
